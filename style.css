@@ -1,0 +1,111 @@
+/*  --color-dark: rgb(14, 14, 14);
+    --color-dark2: rgb(32, 32, 32);
+    --color-dark3: rgb(22, 22, 22);
+    --color-white: #fff;
+    --color-green: rgb(103, 195, 80);
+    --color-green2: rgb(51, 149, 26);
+    --color-red: rgb(184, 40, 35);
+    --color-red2: rgb(146, 22, 17); */
+
+body{
+    font-family: 'lato';
+    background-color: #243b55;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.conteudo-adicionarItem{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.conteudo-adicionarItem input, button{
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    padding: 1rem;
+}
+
+.conteudo-adicionarItem input{
+    width: 20rem;
+    border-radius: 1rem;
+}
+
+.conteudo-adicionarItem button{
+    background-color: rgb(32, 32, 32);
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.conteudo-adicionarItem button:hover{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.conteudo-itensAdicionados ul{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 15px;
+}
+
+.conteudo-itensAdicionados ul li{
+    list-style-type: none;
+    font-size: 18px;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#294160;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.conteudo-itensAdicionados ul li:hover{
+    -webkit-transform: translateY(-8px);
+    -moz-transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    -o-transform: translateY(-8px);
+    transform: translateY(-8px);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.conteudo-itensAdicionados ul li button{
+    background-color: #243b55;
+    color: rgb(255, 15, 15);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.conteudo-itensAdicionados ul li button:hover{
+    color: rgb(206, 5, 5);
+}
+
+@media screen and (max-width: 470px) {
+    .conteudo-adicionarItem input{
+        width: 80%;
+    }
+}
