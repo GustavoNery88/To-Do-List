@@ -14,6 +14,7 @@ function novaTarefa() {
             nome: inputEntrada.value,
         });
         localStorage.setItem("valoresGuardados", JSON.stringify(values));
+        inputEntrada.value = "";
         atualizarLista();
     }
 }
