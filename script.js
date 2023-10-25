@@ -1,70 +1,77 @@
-let campoListaDeItens = document.getElementById("to-do-list");
-let inputCheck = document.getElementById("inputCheck")
+let listaCompleta = document.getElementById("campoListas");
+let input = document.getElementById("inputNovaTarefa")
+let button = document.getElementById("botaoNovaTarefa")
 
-function novaTarefa() {
-    let inputEntrada = document.getElementById("input-nova-tarefa");
-    if (!inputEntrada.value) {
-        inputEntrada.style.border = "1px solid red"
-        alert('Digite algo para inserir em sua lista');
-    } else if (verificarTarefaRepetida(inputEntrada.value)) {
-        alert("Já existe uma tarefa com essa descrição!");
-    } else {
-        inputEntrada.style.border = "none"
-        let values = JSON.parse(localStorage.getItem("valoresGuardados") || '[]');
-        values.push({
-            nome: inputEntrada.value,
-        });
-        localStorage.setItem("valoresGuardados", JSON.stringify(values));
-        inputEntrada.value = "";
-        atualizarLista();
+
+
+let minhaListaDeItens = []
+
+function adicionarNovaTarefa() {
+    if(input.value === ""){
+        alert("input vazio")
+        return
     }
+    minhaListaDeItens.push({
+        tarefa: input.value,
+        concluida: false,
+    })
+
+    input.value = ''
+
+    mostrarTarefas()
 }
 
-function verificarTarefaRepetida(novaTarefa) {
-    let values = JSON.parse(localStorage.getItem("valoresGuardados") || '[]');
-    for (let i = 0; i < values.length; i++) {
-        if (values[i].nome === novaTarefa) {
-            return true;
-        }
-    }
-    return false;
+function mostrarTarefas() {
+    let novaLi = ''
+
+
+    minhaListaDeItens.forEach((item, posicao) => {
+        novaLi += `<li class="task ${item.concluida && 'done'}">
+        <button id="task-${posicao}" class="concluir" onclick="concluirTarefa(${posicao})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clipboard2-check" viewBox="0 0 16 16">
+                <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/>
+                <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/>
+                <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3Z"/>
+              </svg>
+        </button>
+        <p>${item.tarefa}</p>
+        <button class="remover" onclick="deletarItem(${posicao})"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+            </svg> 
+        </button>
+        </li>`
+
+    })
+
+    listaCompleta.innerHTML = novaLi
+
+    localStorage.setItem('lista', JSON.stringify(minhaListaDeItens))
 }
 
-function terminado(nome) {
-    const liElemento = document.querySelector(`li[data-nome="${nome}"]`);
-    liElemento.classList.toggle('terminar');
-    localStorage.setItem(`terminar-${nome}`, liElemento.classList.contains('terminar'));
-  }
-  
-  function atualizarLista() {
-    let values = JSON.parse(localStorage.getItem("valoresGuardados") || '[]');
-    localStorage.setItem("valoresGuardados", JSON.stringify(values));
-    let listaHTML = "";
-  
-    for (let i = 0; i < values.length; i++) {
-      const tarefaNome = values[i].nome;
-      const tarefaTerminada = localStorage.getItem(`terminar-${tarefaNome}`) === 'true' ? 'terminar' : '';
-  
-      listaHTML += `<li data-nome="${tarefaNome}" class="${tarefaTerminada}"><input type="checkbox" onclick='terminado("${tarefaNome}")'> x </input>${tarefaNome} <button onclick='removerItem("${tarefaNome}")'> <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-      </svg> </button></li>`;
-    }
-  
-    const campoListaDeItens = document.getElementById("to-do-list");
-    campoListaDeItens.innerHTML = listaHTML;
-  }
-  
-  atualizarLista();
-  
-
-
-function removerItem(data) {
-    let values = JSON.parse(localStorage.getItem("valoresGuardados") || '[]');
-    let index = values.findIndex(x => x.nome === data);
-    values.splice(index, 1);
-    localStorage.setItem("valoresGuardados", JSON.stringify(values));
-    atualizarLista();
+function concluirTarefa(posicao) {
+    minhaListaDeItens[posicao].concluida = true
+    let concluirTask = document.getElementById(`task-${posicao}`)
+    concluirTask.innerHTML = "";
+    mostrarTarefas()
 }
 
-atualizarLista();
+function deletarItem(posicao) {
+    minhaListaDeItens.splice(posicao, 1)
+
+    mostrarTarefas()
+}
+
+function recarregarTarefas() {
+    const tarefasDoLocalStorage = localStorage.getItem('lista')
+
+    if (tarefasDoLocalStorage) {
+        minhaListaDeItens = JSON.parse(tarefasDoLocalStorage)
+    }
+
+    mostrarTarefas()
+}
+
+recarregarTarefas()
+button.addEventListener('click', adicionarNovaTarefa)

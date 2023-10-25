@@ -53,6 +53,29 @@ body{
     gap: 15px;
 }
 
+.concluir{
+    background-color: #294160;
+    color: white;
+    cursor: pointer;
+} 
+
+.concluir:hover{
+    color: rgb(205, 200, 200);
+}
+
+
+.remover{
+    background-color: #243b55;
+    color: rgb(255, 15, 15);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.remover:hover{
+    color: rgb(206, 5, 5);
+}
+
+
 .conteudo-itensAdicionados ul li{
     list-style-type: none;
     font-size: 18px;
@@ -84,21 +107,8 @@ body{
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-.conteudo-itensAdicionados ul li button{
-    background-color: #243b55;
-    color: rgb(255, 15, 15);
-    cursor: pointer;
-    transition: .3s;
-}
-
-.conteudo-itensAdicionados ul li button:hover{
-    color: rgb(206, 5, 5);
-}
-
-.terminar{
-    color: #FFf;
+.done {
     text-decoration: line-through;
-    font-style: italic;
 }
 
 @media screen and (max-width: 470px) {
@@ -106,3 +116,4 @@ body{
         width: 80%;
     }
 }
+
