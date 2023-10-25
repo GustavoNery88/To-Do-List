@@ -60,15 +60,16 @@ body{
 } 
 
 .concluir:hover{
-    color: rgb(205, 200, 200);
-}
-
+    color: rgb(184, 183, 183);
+} 
 
 .remover{
     background-color: #243b55;
     color: rgb(255, 15, 15);
     cursor: pointer;
     transition: .3s;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 .remover:hover{
@@ -110,6 +111,7 @@ body{
 .done {
     text-decoration: line-through;
 }
+
 
 @media screen and (max-width: 470px) {
     .conteudo-adicionarItem input{
